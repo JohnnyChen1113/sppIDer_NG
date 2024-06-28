@@ -29,3 +29,5 @@ the bwa will run with `bwa mem -x pacbio` parameter
 ## TODO
 1. the output fig are not publishable. We will update the code to improve it.
 2. we will provide new classify strategies, to improve the performance and new functions!
+3. add download function, you can download reference data from NCBI easy and fast!
+4. add sppIDer_TGS to bioconda channel for easy installation.
