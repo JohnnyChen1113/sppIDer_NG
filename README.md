@@ -31,3 +31,4 @@ the bwa will run with `bwa mem -x pacbio` parameter
 2. we will provide new classify strategies, to improve the performance and new functions!
 3. add download function, you can download reference data from NCBI easy and fast!
 4. add sppIDer_TGS to bioconda channel for easy installation.
+5. replace .sam format output with .bam format to reduce file size of mapping output, and also rewrite the parseSam.py with pysam, and renamed to parseBam.py.
