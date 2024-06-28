@@ -1,7 +1,7 @@
 __author__ = 'Quinn'
 __modified_by__ = 'Junhao Chen'
 
-import sys, re, time, os
+import sys, re, time
 from pathlib import Path
 
 ################################################################
@@ -23,7 +23,7 @@ start = time.time()
 speciesDict = {}
 MQscoreDict = {}
 speciesDict["*"] = {}
-speciesDict["*"][0] = 0
+speciesDict["*"][0] = {'count': 0, 'names': []}
 speciesList = ['*']
 
 with open(workingDir / outputLenName, 'w', encoding='utf-8') as outputLen, open(workingDir / samName, 'r', encoding='utf-8') as sam:
@@ -48,6 +48,8 @@ with open(workingDir / outputLenName, 'w', encoding='utf-8') as outputLen, open(
             chr = lineSplit[2].split("-")
             species = chr[0]
             MQscore = int(lineSplit[4])
+            if MQscore not in speciesDict[species]:
+                speciesDict[species][MQscore] = {'count': 0, 'names': []}
             speciesDict[species][MQscore]['count'] += 1
             speciesDict[species][MQscore]['names'].append(sequenceName)
 
@@ -61,4 +63,3 @@ with open(workingDir / outputName, 'w', encoding='utf-8') as output:
 
 currentTime = time.time() - start
 print(str(currentTime) + " secs\n")
-
