@@ -80,41 +80,36 @@ else: trackerOut.write("coverage analysis option = by each base pair -d\n")
 trackerOut.close()
 
 ########################## BWA ###########################
-#bwaOutName = outputPrefix + ".sam"
-#bwaOutFile = open(os.path.join(workingDir, bwaOutName), 'w')
-#if read2Name:
-#    print(f"Read1={read1Name}\nRead2={read2Name}")
-#    subprocess.call([args.mapping_tool, "mem", "-t", numCores, refGen, read1Name, read2Name], stdout=bwaOutFile, cwd=workingDir)
-#else:
-#    print(f"Read1={read1Name}")
-#    subprocess.call([args.mapping_tool, "mem", "-t", numCores, refGen, read1Name], stdout=bwaOutFile, cwd=workingDir)
-#bwaOutFile.close()
-#print("BWA complete")
-#currentTime = time.time() - start
-#elapsedTime = calcElapsedTime(currentTime)
-#print(f"Elapsed time: {elapsedTime}")
-#trackerOut = open(os.path.join(workingDir, outputPrefix + "_sppIDerRun.info"), 'a')
-#trackerOut.write(f"BWA complete\nElapsed time: {elapsedTime}")
-#trackerOut.close()
-
 bwaOutName = outputPrefix + ".sam"
 bwaOutFile = open(os.path.join(workingDir, bwaOutName), 'w')
 
 match args.mapping_tool:
     case 'bwa':
         if args.seq_type and args.seq_type.lower() == 'pacbio':
-            subprocess.call([args.mapping_tool, "mem", "-t", numCores, "-x", "pacbio", refGen, read1Name], stdout=bwaOutFile, cwd=workingDir)
+            command = [args.mapping_tool, "mem", "-t", numCores, "-x", "pacbio", refGen, read1Name]
+            print("Executing command:", " ".join(command))
+            subprocess.call(command, stdout=bwaOutFile, cwd=workingDir)
         elif args.seq_type and args.seq_type.lower() == 'ont':
-            subprocess.call([args.mapping_tool, "mem", "-t", numCores, "-x", "ont2d", refGen, read1Name], stdout=bwaOutFile, cwd=workingDir)
+            command = [args.mapping_tool, "mem", "-t", numCores, "-x", "ont2d", refGen, read1Name]
+            print("Executing command:", " ".join(command))
+            subprocess.call(command, stdout=bwaOutFile, cwd=workingDir)
         else:
-            subprocess.call([args.mapping_tool, "mem", "-t", numCores, refGen, read1Name], stdout=bwaOutFile, cwd=workingDir)
+            command = [args.mapping_tool, "mem", "-t", numCores, refGen, read1Name]
+            print("Executing command:", " ".join(command))
+            subprocess.call(command, stdout=bwaOutFile, cwd=workingDir)
     case 'minimap2':
         if args.seq_type and args.seq_type.lower() == 'pacbio':
-            subprocess.call(["minimap2", "-x", "map-pb", "-a", "-t", numCores, refGen, read1Name], stdout=bwaOutFile, cwd=workingDir)
+            command = ["minimap2", "-x", "map-pb", "-a", "-t", numCores, refGen, read1Name]
+            print("Executing command:", " ".join(command))
+            subprocess.call(command, stdout=bwaOutFile, cwd=workingDir)
         elif args.seq_type and args.seq_type.lower() == 'ont':
-            subprocess.call(["minimap2", "-x", "map-ont", "-a", "-t", numCores, refGen, read1Name], stdout=bwaOutFile, cwd=workingDir)
+            command = ["minimap2", "-x", "map-ont", "-a", "-t", numCores, refGen, read1Name]
+            print("Executing command:", " ".join(command))
+            subprocess.call(command, stdout=bwaOutFile, cwd=workingDir)
         else:
-            subprocess.call(["minimap2", "-a", "-t", numCores, refGen, read1Name], stdout=bwaOutFile, cwd=workingDir)
+            command = ["minimap2", "-a", "-t", numCores, refGen, read1Name]
+            print("Executing command:", " ".join(command))
+            subprocess.call(command, stdout=bwaOutFile, cwd=workingDir)
     case _:
         raise ValueError(f"Unsupported mapping tool: {args.mapping_tool}")
 
