@@ -1,4 +1,4 @@
-# sppIDer_TGS
+# sppIDer_NG
 *sppIDer* for *T*hird *G*eneration *S*equencing data
 This is a updated version of original [sppIDer](https://github.com/GLBRC/sppIDer).
 
